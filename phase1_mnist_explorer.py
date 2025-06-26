@@ -1,46 +1,58 @@
+# phase1_mnist_explorer.py 
+
 import torch
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
 
-# --- 1. Define a transform to normalize the data ---
-# PyTorch's datasets return images in a certain format (PILImage).
-# We need to convert them to Tensors so our model can work with them.
-transform = transforms.Compose([
-    transforms.ToTensor(),
-    # Normalizes the tensor with a mean and standard deviation.
-    # For MNIST, the mean is 0.1307 and std is 0.3081. This helps training.
-    transforms.Normalize((0.1307,), (0.3081,))
-])
+def get_mnist_data():
+    """Downloads the MNIST dataset and returns the training and test sets."""
+    print("Downloading MNIST data...")
+    
+    # Define a transform to normalize the data
+    transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,))
+    ])
 
-# --- 2. Download the training and test datasets ---
-# The torchvision library makes this incredibly easy.
-# It will download the data to a 'data' folder in your project if it doesn't exist.
-print("Downloading MNIST training data...")
-train_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
+    # Download training data
+    train_data = datasets.MNIST(
+        root='data',
+        train=True,
+        download=True,
+        transform=transform
+    )
 
-print("Downloading MNIST test data...")
-test_dataset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+    # Download test data
+    test_data = datasets.MNIST(
+        root='data',
+        train=False,
+        download=True,
+        transform=transform
+    )
+    
+    print("Download complete!")
+    return train_data, test_data
 
-print("\nDownload complete!")
-print(f"Number of training images: {len(train_dataset)}")
-print(f"Number of test images: {len(test_dataset)}")
+# This block of code will only run when you execute this script directly
+# e.g., `python phase1_mnist_explorer.py`
+# It will NOT run when this file is imported by another script.
+if __name__ == '__main__':
+    # Get the data
+    training_data, test_data = get_mnist_data()
 
+    print(f"Number of training images: {len(training_data)}")
+    print(f"Number of test images: {len(test_data)}")
 
-# --- 3. Explore a single data point ---
-# Let's grab the very first image and its label from the training set.
-# A dataset in PyTorch is like a list, you can access items with [index].
-image, label = train_dataset[0]
+    # Create a temporary DataLoader to explore the first image
+    temp_loader = torch.utils.data.DataLoader(training_data, batch_size=1)
+    first_image, first_label = next(iter(temp_loader))
 
-print(f"\nExploring the first image:")
-print(f"The label is: {label}")
-# The image is a tensor. .shape tells us its dimensions.
-# [1, 28, 28] means: 1 color channel (it's grayscale), 28 pixels high, 28 pixels wide.
-print(f"The image is a tensor of shape: {image.shape}")
+    print("\nExploring the first image:")
+    print(f"The label is: {first_label.item()}")
+    print(f"The image is a tensor of shape: {first_image.shape}")
 
-
-# --- 4. Visualize the image ---
-# We use matplotlib to actually see the image.
-# We need to remove the color channel dimension for plotting, so we use .squeeze().
-plt.imshow(image.squeeze(), cmap='gray')
-plt.title(f'Label: {label}')
-plt.show() # This will pop up a window with the image.
+    print("\nDisplaying the first image...")
+    image_to_show = first_image.squeeze()
+    plt.imshow(image_to_show, cmap='gray')
+    plt.title(f"Label: {first_label.item()}")
+    plt.show()
