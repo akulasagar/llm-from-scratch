@@ -19,7 +19,6 @@ EPOCHS = 3
 training_data, test_data = get_mnist_data()
 train_loader = DataLoader(training_data, batch_size=BATCH_SIZE, shuffle=True)
 
-# ... the rest of your training loop code remains the same ...
 # --- 3. Model, Loss Function, and Optimizer ---
 # Instantiate the model
 model = MNISTClassifier()
