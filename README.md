@@ -35,6 +35,6 @@ After training, the model was able to generate new, original text. While not ful
 
 **Sample Generated Text:**
 
-> [Paste a sample of your generated story here]
+> [Once upon a time time round time time increasing flea solut nexpected bathe bleeding Mina weekend vision congratulated ouse gloomy pleas rust ife Choo urry Ant paused tummy steer Bop time flut time Sal mayor micro snapped * ply udged gifted Taking occasion fluttered Through softer yesterday backs feather sight intent espe aur providing Tigger rad talent wander tidying Stri beeped experien ouse Jessica uc rong concentr ob Satur worrying seaweed Fl streng Pr directions polished countries results Lou traveling onds mention stage Using swal airy onse superheroes inchworm troubled exploring opin shopping Brooke rushing ica stage scut nap aim reward osaur pare detail]
 
 This project demonstrates a complete, from-scratch understanding of the principles behind modern Large Language Models.
